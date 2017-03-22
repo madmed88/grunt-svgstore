@@ -74,6 +74,7 @@ module.exports = function (grunt) {
       fixedSizeVersion: false,
       externalDefs: false,
       includeTitleElement: true,
+      setUniqueIds: true,
       preserveDescElement: true
     });
 
@@ -128,17 +129,19 @@ module.exports = function (grunt) {
           return id + "-" + oldId;
         }
 
-        $('[id]').each(function () {
-          var $elem = $(this);
-          var id = $elem.attr('id');
-          var uid = getUniqueId(id);
-          mappedIds[id] = {
-            id : uid,
-            referenced : false,
-            $elem : $elem
-          };
-          $elem.attr('id', uid);
-        });
+        if (options.setUniqueIds) {
+          $('[id]').each(function () {
+            var $elem = $(this);
+            var id = $elem.attr('id');
+            var uid = getUniqueId(id);
+            mappedIds[id] = {
+              id : uid,
+              referenced : false,
+              $elem : $elem
+            };
+            $elem.attr('id', uid);
+          });
+        }
 
         $('*').each(function () {
           var $elem = $(this);
