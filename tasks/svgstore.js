@@ -75,6 +75,7 @@ module.exports = function (grunt) {
       externalDefs: false,
       includeTitleElement: true,
       setUniqueIds: true,
+      removeEmptyGroupElements: true,
       preserveDescElement: true
     });
 
@@ -115,12 +116,14 @@ module.exports = function (grunt) {
             });
 
         // Remove empty g elements
-        $('g').each(function(){
-          var $elem = $(this);
-          if (!$elem.children().length) {
-            $elem.remove();
-          }
-        });
+        if (options.removeEmptyGroupElements) {
+          $('g').each(function(){
+            var $elem = $(this);
+            if (!$elem.children().length) {
+              $elem.remove();
+            }
+          });
+        }
 
         // Map to store references from id to uniqueId + id;
         var mappedIds = {};
